@@ -1,0 +1,32 @@
+ <div style="margin: 50px;">
+    <h2>{{movie?.title}}</h2>
+    <h4> {{movie?.tagline}}</h4>
+    <span>Released: {{movie?.release_date | date}} </span>
+    <table>
+
+        <tr>
+            <td rowspan="3">
+                <img src="https://image.tmdb.org/t/p/original/{{movie?.poster_path}}" alt="{{movie?.title}}" width="200" height="200">
+            </td>
+            <td rowspan="1" style="width: 400px; vertical-align: top;">
+                {{movie?.overview}}
+            </td>        
+        </tr>
+        <tr>
+            <td>
+                <ul>
+                    <ng-container *ngFor="let g of movie?.genres">
+                        <li>
+                            {{g.name}}
+
+                        </li>
+                    </ng-container>
+                </ul>
+            
+            </td>        
+        </tr>   
+    </table>
+    <br>
+    <button> Add To Watch List</button> 
+    <button [routerLink]="['']">Go Back to Search</button>
+</div>

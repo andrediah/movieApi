@@ -1,0 +1,20 @@
+<div style="margin: 5%">
+    <form (ngSubmit)="searchMovie()">
+        <label for="name">Title :</label>
+        <div style="text-align: left">
+        <input style="width: 40%" name="name" id="name" [(ngModel)]="movieSearch" type="text"><br>
+
+            
+
+        </div>
+        <button type="submit" class="sButton">Search </button>
+    </form>
+</div>
+
+<div *ngIf="movieResutls.length > 0">
+    <ul>
+        <ng-container *ngFor="let item of movieResutls; let i=index">
+            <app-movie-result [movie]="item"></app-movie-result>
+        </ng-container>    
+    </ul>
+</div>
