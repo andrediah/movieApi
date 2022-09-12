@@ -1,13 +1,66 @@
 <div style="margin: 5%">
-    <form (ngSubmit)="searchMovie()">
-        <label for="name">Title :</label>
-        <div style="text-align: left">
-        <input style="width: 40%" name="name" id="name" [(ngModel)]="movieSearch" type="text"><br>
+    <form (ngSubmit)="searchMovie()" #myForm="ngForm">
+        <table>
+            <tr>
+                <td>
+                    <label for="name">Title :</label>
+                    <div style="text-align: left">
+                        <input style="width: 100%" name="name" id="name"  [(ngModel)]="movieSearch" type="text" [disabled]="useFilter" ><br>
+                    </div>                    
+                </td>
+                <td >
+                    <div style="padding-left: 20px;padding-top: 15px;" >
+                        <input (change)="toggleFilter()" style="display: inline;
+                        padding-left: 15px;
+                        text-indent: 15px;" type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+                        <label style="display: inline;
+                        padding-left: 5px;
+                        text-indent: 15px;" for="vehicle1"> Use Filters</label><br>
 
-            
+                    </div>
+                    
+                </td>
+            </tr>
+            <tr *ngIf="useFilter">
+                <td>
+                    <label for="name">Genre : </label>
+                    <select #dpGenre (change)="onSelectedGenreType(dpGenre.value)" 
+                    required  name="genre" [(ngModel)]="genreFilter" required #genre="ngModel" >
+                        <option value="" >Select..</option>
+                        <option *ngFor="let genre of (genreData$ | async)?.genres"
+                            [value]="genre.id">{{genre.name}}
+                        </option>
+                    </select>
+                </td>
+            </tr>
+            <tr *ngIf="useFilter">
+                <td>
+                    <label for="rating">Rating :</label>
+                    <div style="text-align: left">
+                        <input style="width: 40%" name="rating" id="rating" [(ngModel)]="ratingFilter" min="0" max="10" type="number"><br>
+                    </div>              
+                </td>
+            </tr>           
+            <tr *ngIf="useFilter">
+                <td>
+                    <label for="runtime">Minimum Runtime :</label>
+                    <div style="text-align: left">
+                        <input style="width: 40%" name="runtime" id="runtime" [(ngModel)]="runtimeFilter" type="number"><br>
+                    </div>
+                </td>
+            </tr>   
+            <tr>
+                <td>
+                    <div>
+                        <button type="submit" class="sButton"  [disabled]="!myForm.valid">Search </button>
+                    </div>                    
+                </td>
+            </tr>                 
+        </table>
 
-        </div>
-        <button type="submit" class="sButton">Search </button>
+        
+        
+        
     </form>
 </div>
 

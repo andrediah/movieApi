@@ -4,8 +4,10 @@
 
 export const environment = {
   production: false,
-  apiEndpoint: 'https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate',
-  movieApiEndpoint: 'https://api.themoviedb.org/3/movie/'
+  apiEndpoint: 'https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate&query=tron',
+  movieSearchApiEndpoint: 'https://api.themoviedb.org/3/search/movie?page=1&include_adult=false',
+  movieApiEndpoint: 'https://api.themoviedb.org/3/movie/',
+  movieGenreApiEndpoint: 'https://api.themoviedb.org/3/genre/movie/list',
 };
 
 /*
