@@ -1,73 +1,95 @@
-<div style="margin: 5%">
-    <form (ngSubmit)="searchMovie()" #myForm="ngForm">
-        <table>
-            <tr>
-                <td>
-                    <label for="name">Title :</label>
-                    <div style="text-align: left">
-                        <input style="width: 100%" name="name" id="name"  [(ngModel)]="movieSearch" type="text" [disabled]="useFilter" ><br>
-                    </div>                    
-                </td>
-                <td >
-                    <div style="padding-left: 20px;padding-top: 15px;" >
-                        <input (change)="toggleFilter()" style="display: inline;
-                        padding-left: 15px;
-                        text-indent: 15px;" type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-                        <label style="display: inline;
-                        padding-left: 5px;
-                        text-indent: 15px;" for="vehicle1"> Use Filters</label><br>
-
-                    </div>
+<h1 style="margin: 5%">Movie Hub</h1>
+<table>
+    <tr>
+        <td style="width: 800px;">
+            <div style="margin: 5%">
+                <form (ngSubmit)="SubmitForm()" #myForm="ngForm">
+                    <table>
+                        <tr>
+                            <td>
+                                <label for="name">Title :</label>
+                                <div style="text-align: left">
+                                    <input style="width: 100%" name="name" id="name"  [(ngModel)]="movieSearch" type="text" [disabled]="useFilter" ><br>
+                                </div>                    
+                            </td>
+                            <td >
+                                <div style="padding-left: 20px;padding-top: 15px;" >
+                                    <input (change)="toggleFilter()" style="display: inline;
+                                    padding-left: 15px;
+                                    text-indent: 15px;" type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+                                    <label style="display: inline;
+                                    padding-left: 5px;
+                                    text-indent: 15px;" for="vehicle1"> Use Filters</label><br>            
+                                </div>                                
+                            </td>
+                        </tr>
+                        <tr *ngIf="useFilter">
+                            <td>
+                                <label for="name">Genre : </label>
+                                <select #dpGenre (change)="onSelectedGenreType(dpGenre.value)" 
+                                required  name="genre" [(ngModel)]="genreFilter" required #genre="ngModel" >
+                                    <option value="" >Select..</option>
+                                    <option *ngFor="let genre of (genreData$ | async)?.genres"
+                                        [value]="genre.id">{{genre.name}}
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr *ngIf="useFilter">
+                            <td>
+                                <label for="rating">Rating :</label>
+                                <div style="text-align: left">
+                                    <input style="width: 40%" name="rating" id="rating" [(ngModel)]="ratingFilter" min="0" max="10" type="number"><br>
+                                </div>              
+                            </td>
+                        </tr>           
+                        <tr *ngIf="useFilter">
+                            <td>
+                                <label for="runtime">Minimum Runtime :</label>
+                                <div style="text-align: left">
+                                    <input style="width: 40%" name="runtime" id="runtime" [(ngModel)]="runtimeFilter" type="number"><br>
+                                </div>
+                            </td>
+                        </tr>   
+                        <tr>
+                            <td>
+                                <div>
+                                    <button type="submit" class="sButton"  [disabled]="!myForm.valid">Search </button>
+                                </div>                    
+                            </td>
+                            <td>
+                                <button [routerLink]="['/watchlist']">Go To Watch list</button>
+                            </td>
+                        </tr>                 
+                    </table>
+            
                     
-                </td>
-            </tr>
-            <tr *ngIf="useFilter">
-                <td>
-                    <label for="name">Genre : </label>
-                    <select #dpGenre (change)="onSelectedGenreType(dpGenre.value)" 
-                    required  name="genre" [(ngModel)]="genreFilter" required #genre="ngModel" >
-                        <option value="" >Select..</option>
-                        <option *ngFor="let genre of (genreData$ | async)?.genres"
-                            [value]="genre.id">{{genre.name}}
-                        </option>
-                    </select>
-                </td>
-            </tr>
-            <tr *ngIf="useFilter">
-                <td>
-                    <label for="rating">Rating :</label>
-                    <div style="text-align: left">
-                        <input style="width: 40%" name="rating" id="rating" [(ngModel)]="ratingFilter" min="0" max="10" type="number"><br>
-                    </div>              
-                </td>
-            </tr>           
-            <tr *ngIf="useFilter">
-                <td>
-                    <label for="runtime">Minimum Runtime :</label>
-                    <div style="text-align: left">
-                        <input style="width: 40%" name="runtime" id="runtime" [(ngModel)]="runtimeFilter" type="number"><br>
-                    </div>
-                </td>
-            </tr>   
-            <tr>
-                <td>
-                    <div>
-                        <button type="submit" class="sButton"  [disabled]="!myForm.valid">Search </button>
-                    </div>                    
-                </td>
-            </tr>                 
-        </table>
+                    
+                    
+                </form>
+            
+                <div *ngIf="movieResutls.length > 0">
+                    <ul>
+                        <ng-container *ngFor="let item of movieResutls; let i=index">
+                            <app-movie-result [movie]="item" (addWatchlistItemEvent)="addtoWatch($event)"></app-movie-result>
+                        </ng-container>    
+                    </ul>
+                </div>
+                
+                <div *ngIf="maxPage > 0">
+                   
+                    <span >
+                        <button *ngIf="currentPage > 1" (click)="previousPage()">Previous</button>
+                    </span> 
+                        Page {{currentPage}} of {{this.maxPage}} 
+                
+                    <span >
+                        <button *ngIf="currentPage < maxPage" (click)="nextPage()">Next</button>
+                    </span> 
+                </div>
+            
+            </div>            
+        </td>        
+    </tr>
+</table>
 
-        
-        
-        
-    </form>
-</div>
-
-<div *ngIf="movieResutls.length > 0">
-    <ul>
-        <ng-container *ngFor="let item of movieResutls; let i=index">
-            <app-movie-result [movie]="item"></app-movie-result>
-        </ng-container>    
-    </ul>
-</div>

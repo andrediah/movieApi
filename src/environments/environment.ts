@@ -8,6 +8,7 @@ export const environment = {
   movieSearchApiEndpoint: 'https://api.themoviedb.org/3/search/movie?page=1&include_adult=false',
   movieApiEndpoint: 'https://api.themoviedb.org/3/movie/',
   movieGenreApiEndpoint: 'https://api.themoviedb.org/3/genre/movie/list',
+  restdbApi: 'https://movielist-5d7f.restdb.io/rest/watchlist',
 };
 
 /*

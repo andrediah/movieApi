@@ -1,0 +1,19 @@
+<div>
+    <h1>Watch List</h1>
+</div>
+<div *ngIf="(watchListMovies$ | async)?.length === 0">
+    Nothing to see
+</div>
+<table>
+    <tr *ngFor="let m of (watchListMovies$ | async)">
+        <td>
+            <a [routerLink]="['/movie', m?.id]" >
+                {{m.title}}
+            </a>  
+               <button (click)='removeWatchListItem(m._id)' style="padding-left: 10px;"> Remove</button>  
+        </td>
+    </tr>
+</table>
+<br>
+
+<button [routerLink]="['']">Go Back to Search</button>

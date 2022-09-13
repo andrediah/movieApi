@@ -1,7 +1,18 @@
 <li>
-    <a [routerLink]="['/movie', movie?.id]" >
-        {{movie?.title}} 
-    </a>    
+  <table>
+    <tr>
+      <td style="width: 300px;">
+        <a [routerLink]="['/movie', movie?.id]" >
+          {{movie?.title}} 
+      </a>  
+      </td>
+      <td>
+        <button (click)="addtoWatchList(movie)" style="padding-left: 10px;"> Add to Watch List</button>  
+      </td>
+    </tr>
+  </table>
+    
+    
 </li>
     
 

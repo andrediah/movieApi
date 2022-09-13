@@ -11,23 +11,29 @@ import { MovieResultComponent } from './components/movie-result/movie-result.com
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { MovieDetailComponent } from './components/movie-detail/movie-detail.component';
 import { ParameterInterceptor } from './intercentor/parameter.interceptor';
+import { WatchlistComponent } from './components/watchlist/watchlist.component';
+import { HeaderInterceptor } from './intercentor/header.interceptor';
+
 @NgModule({
   declarations: [
     AppComponent,
     SearchFormComponent,
     MovieResultComponent,
     NotFoundComponent,
-    MovieDetailComponent
+    MovieDetailComponent,
+    WatchlistComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,   
     
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: ParameterInterceptor, multi:true}
+    {provide: HTTP_INTERCEPTORS, useClass: ParameterInterceptor, multi:true},
+    {provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi:true},
+    
   ],
   bootstrap: [AppComponent]
 })
