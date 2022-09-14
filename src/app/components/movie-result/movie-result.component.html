@@ -1,18 +1,9 @@
-<li>
-  <table>
-    <tr>
-      <td style="width: 300px;">
-        <a [routerLink]="['/movie', movie?.id]" >
-          {{movie?.title}} 
-      </a>  
-      </td>
-      <td>
-        <button (click)="addtoWatchList(movie)" style="padding-left: 10px;"> Add to Watch List</button>  
-      </td>
-    </tr>
-  </table>
-    
-    
-</li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    <a [routerLink]="['/movie', movie?.id]" >
+      {{movie?.title}} 
+  </a>  
+    <button (click)="addtoWatchList(movie)" class="btn btn-primary btn-sm"> Add to Watchlist</button>  
+  </li>
+
     
 

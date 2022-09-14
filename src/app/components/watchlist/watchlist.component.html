@@ -1,10 +1,26 @@
-<div>
-    <h1>Watch List</h1>
+<div class="card m-5">
+    <h1 class="card-title" >Watch List</h1>
+    <div class="card-body">
+        <div *ngIf="(watchListMovies$ | async)?.length === 0">
+            Nothing to see
+        </div>
+        <div class="col-6">
+            <ul class="list-group" *ngFor="let m of (watchListMovies$ | async)" >
+                <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    <a [routerLink]="['/movie', m?.id]" >
+                        {{m.title}}
+                    </a>  
+                       <button (click)='removeWatchListItem(m._id)' class="btn btn-primary btn-sm"> Remove</button>  
+                </li>
+            </ul>
+        </div>
+        
+        <button class="btn btn-success btn-sm col-2" [routerLink]="['']">Back to Search</button>
+    </div>
+    
 </div>
-<div *ngIf="(watchListMovies$ | async)?.length === 0">
-    Nothing to see
-</div>
-<table>
+
+<!-- <table>
     <tr *ngFor="let m of (watchListMovies$ | async)">
         <td>
             <a [routerLink]="['/movie', m?.id]" >
@@ -14,6 +30,5 @@
         </td>
     </tr>
 </table>
-<br>
+<br> -->
 
-<button [routerLink]="['']">Go Back to Search</button>

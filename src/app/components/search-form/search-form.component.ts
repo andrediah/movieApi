@@ -28,7 +28,9 @@ export class SearchFormComponent implements OnInit {
   Genre = Genre;
 
   ngOnInit(): void {
-    this.genreData$ = this.apiServices.getMovieGenre();    
+    this.genreData$ = this.apiServices.getMovieGenre();  
+    // this.movieSearch = 'tron';
+    // this.searchMovie();  
   }
   SubmitForm(){
     this.currentPage = 1;

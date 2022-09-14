@@ -1,95 +1,78 @@
-<h1 style="margin: 5%">Movie Hub</h1>
-<table>
-    <tr>
-        <td style="width: 800px;">
-            <div style="margin: 5%">
-                <form (ngSubmit)="SubmitForm()" #myForm="ngForm">
-                    <table>
-                        <tr>
-                            <td>
-                                <label for="name">Title :</label>
-                                <div style="text-align: left">
-                                    <input style="width: 100%" name="name" id="name"  [(ngModel)]="movieSearch" type="text" [disabled]="useFilter" ><br>
-                                </div>                    
-                            </td>
-                            <td >
-                                <div style="padding-left: 20px;padding-top: 15px;" >
-                                    <input (change)="toggleFilter()" style="display: inline;
-                                    padding-left: 15px;
-                                    text-indent: 15px;" type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-                                    <label style="display: inline;
-                                    padding-left: 5px;
-                                    text-indent: 15px;" for="vehicle1"> Use Filters</label><br>            
-                                </div>                                
-                            </td>
-                        </tr>
-                        <tr *ngIf="useFilter">
-                            <td>
-                                <label for="name">Genre : </label>
-                                <select #dpGenre (change)="onSelectedGenreType(dpGenre.value)" 
-                                required  name="genre" [(ngModel)]="genreFilter" required #genre="ngModel" >
-                                    <option value="" >Select..</option>
-                                    <option *ngFor="let genre of (genreData$ | async)?.genres"
-                                        [value]="genre.id">{{genre.name}}
-                                    </option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr *ngIf="useFilter">
-                            <td>
-                                <label for="rating">Rating :</label>
-                                <div style="text-align: left">
-                                    <input style="width: 40%" name="rating" id="rating" [(ngModel)]="ratingFilter" min="0" max="10" type="number"><br>
-                                </div>              
-                            </td>
-                        </tr>           
-                        <tr *ngIf="useFilter">
-                            <td>
-                                <label for="runtime">Minimum Runtime :</label>
-                                <div style="text-align: left">
-                                    <input style="width: 40%" name="runtime" id="runtime" [(ngModel)]="runtimeFilter" type="number"><br>
-                                </div>
-                            </td>
-                        </tr>   
-                        <tr>
-                            <td>
-                                <div>
-                                    <button type="submit" class="sButton"  [disabled]="!myForm.valid">Search </button>
-                                </div>                    
-                            </td>
-                            <td>
-                                <button [routerLink]="['/watchlist']">Go To Watch list</button>
-                            </td>
-                        </tr>                 
-                    </table>
-            
-                    
-                    
-                    
-                </form>
-            
-                <div *ngIf="movieResutls.length > 0">
-                    <ul>
-                        <ng-container *ngFor="let item of movieResutls; let i=index">
-                            <app-movie-result [movie]="item" (addWatchlistItemEvent)="addtoWatch($event)"></app-movie-result>
-                        </ng-container>    
-                    </ul>
-                </div>
-                
-                <div *ngIf="maxPage > 0">
-                   
-                    <span >
-                        <button *ngIf="currentPage > 1" (click)="previousPage()">Previous</button>
-                    </span> 
-                        Page {{currentPage}} of {{this.maxPage}} 
-                
-                    <span >
-                        <button *ngIf="currentPage < maxPage" (click)="nextPage()">Next</button>
-                    </span> 
-                </div>
-            
-            </div>            
-        </td>        
-    </tr>
-</table>
+<div class="card" style="width: 38rem; margin: 5%">
+    <div class="card-body">
+        <h2 class="card-title">Movie Hub</h2>
+        <form (ngSubmit)="SubmitForm()" #myForm="ngForm">
+        <div class="form-group">
+            <label for="title">Title :</label>                                        
+            <input style="width: 100%" class="form-control" name="title" id="title"  [(ngModel)]="movieSearch" type="text"
+            placeholder="Enter search information" [disabled]="useFilter" ><br>
+        </div>
+        <div class="form-group form-check">
+            <input (change)="toggleFilter()" type="checkbox" class="form-check-input" id="useFilter">
+            <label class="form-check-label" for="useFilter">Use Filters</label>
+        </div>  
 
+        <div class="card col-6" *ngIf="useFilter" >
+            <div class="card-body">
+
+                <div class="form-group form-genre">
+                    <select class="form-control"  #dpGenre (change)="onSelectedGenreType(dpGenre.value)" 
+                        name="genre" [(ngModel)]="genreFilter" #genre="ngModel" >
+                        <option value="" >Choose Genre...</option>
+                        <option *ngFor="let genre of (genreData$ | async)?.genres"
+                            [value]="genre.id">{{genre.name}}
+                        </option>
+                    </select>    
+                </div>    
+                <div class="form-group form-rating" >
+                    <label for="rating">Rating :</label>
+                    <input class="form-control"  name="rating" id="rating" [(ngModel)]="ratingFilter" min="0" max="10" type="number">                    
+                </div>
+                <div class="form-group form-runtime" >
+                    <label for="runtime">Minimum Runtime :</label>
+                    <input class="form-control" name="runtime" id="runtime" [(ngModel)]="runtimeFilter"  min="0" type="number">
+                </div>   
+
+            </div>
+        </div>
+        
+        
+
+        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+            <div class="btn-group mr-2" role="group">
+                <button type="submit" class="btn btn-primary btn-sm" [disabled]="!myForm.valid">Search </button>                
+                </div>
+                <div class="btn-group margin mr-2"style="margin-left: 20px" role="group">
+                <button [routerLink]="['/watchlist']" class="btn btn-success btn-sm">Go To Watchlist</button>    
+                </div>              
+        </div>
+        </form>
+    </div>
+</div>
+
+<div class="card col-8 m-5" style="margin: 5%" *ngIf="movieResutls.length > 0">
+    <h4 class="card-title m-3">Search Results</h4>
+    <div class="card-body">
+
+        <div >
+            <ul class="list-group">
+                <ng-container *ngFor="let item of movieResutls; let i=index">
+                    <app-movie-result [movie]="item" (addWatchlistItemEvent)="addtoWatch($event)"></app-movie-result>
+                </ng-container>    
+            </ul>
+        </div>
+        
+        <div *ngIf="maxPage > 0">
+           
+            <span >
+                <button *ngIf="currentPage > 1" (click)="previousPage()">Previous</button>
+            </span> 
+                Page {{currentPage}} of {{this.maxPage}} 
+        
+            <span >
+                <button *ngIf="currentPage < maxPage" (click)="nextPage()">Next</button>
+            </span> 
+        </div>
+    </div>
+</div>
+ 
