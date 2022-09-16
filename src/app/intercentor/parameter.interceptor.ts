@@ -7,6 +7,7 @@ import {
   HttpParams
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class ParameterInterceptor implements HttpInterceptor {
@@ -18,7 +19,7 @@ export class ParameterInterceptor implements HttpInterceptor {
     if (req.url.includes('api.themoviedb.org')){
 
     
-      const tmdbApiKey = 'de187e9e947efda08964dd2e964361d5';
+      const tmdbApiKey = environment.moviedbApiKey;
       req = req.clone({
         params: (req.params ? req.params : new HttpParams())
                   .set('language', 'en-US') /*.... add new params here .....*/ 

@@ -6,6 +6,7 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class HeaderInterceptor implements HttpInterceptor {
@@ -16,7 +17,7 @@ export class HeaderInterceptor implements HttpInterceptor {
    
     if (request.url.includes('restdb.io')){    
     
-      const restdbApiToken = '631f8ec0fdc15b0265f17346';
+      const restdbApiToken = environment.restdbApiKey;
     
       request = request.clone({ 
       headers: request.headers

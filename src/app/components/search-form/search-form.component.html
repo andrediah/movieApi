@@ -3,7 +3,7 @@
         <h2 class="card-title">Movie Hub</h2>
         <form (ngSubmit)="SubmitForm()" #myForm="ngForm">
         <div class="form-group">
-            <label for="title">Title :</label>                                        
+            <label for="title">Search :</label>                                        
             <input style="width: 100%" class="form-control" name="title" id="title"  [(ngModel)]="movieSearch" type="text"
             placeholder="Enter search information" [disabled]="useFilter" ><br>
         </div>

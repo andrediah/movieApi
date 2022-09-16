@@ -9,6 +9,8 @@ export const environment = {
   movieApiEndpoint: 'https://api.themoviedb.org/3/movie/',
   movieGenreApiEndpoint: 'https://api.themoviedb.org/3/genre/movie/list',
   restdbApi: 'https://movielist-5d7f.restdb.io/rest/watchlist',
+  restdbApiKey:'631f8ec0fdc15b0265f17346',
+  moviedbApiKey:'de187e9e947efda08964dd2e964361d5'
 };
 
 /*
